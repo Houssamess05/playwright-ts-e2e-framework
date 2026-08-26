@@ -1,5 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
+import { UserData } from '@data/user.types';
 
 export class RegisterPage extends BasePage{
 
@@ -22,12 +23,10 @@ export class RegisterPage extends BasePage{
   private zipcodeInput: Locator;
   private mobileNumberInput: Locator;
   private accountCreatedMessage: Locator;
-
-
+  private continueButton: Locator;
 
     constructor(page: Page) {
         super(page); // Llama al constructor de la clase base
-        this.page = page;
         this.nameInput = page.getByRole('textbox', { name: 'Name' });
         this.emailInput = page.getByTestId('signup-email');
         this.passwordInput = page.getByTestId('password');
@@ -64,25 +63,25 @@ export class RegisterPage extends BasePage{
         await this.page.getByRole('button', { name: 'Signup' }).click();
     }
 
-    async completeAccountForm(password: string, day: string, month: string, year: string, firstName: string, lastName: string, company: string, address1: string, address2: string, country: string, state: string, city: string, zipcode: string, mobileNumber: string): Promise<void> {
-        await this.passwordInput.fill(password);
-        await this.dayInput.selectOption(day);
-        await this.monthInput.selectOption(month);
-        await this.yearInput.selectOption(year);
-        await this.newsletterCheckbox.check();
-        await this.offersCheckbox.check();
-        await this.firstNameInput.fill(firstName);
-        await this.lastNameInput.fill(lastName);
-        await this.companyInput.fill(company);
-        await this.address1Input.fill(address1);
-        await this.address2Input.fill(address2);
-        await this.countrySelect.selectOption(country);
-        await this.stateInput.fill(state);
-        await this.cityInput.fill(city);
-        await this.zipcodeInput.fill(zipcode);
-        await this.mobileNumberInput.fill(mobileNumber);
-        await this.page.getByRole('button', { name: 'Create Account' }).click();
-    }
+    async completeAccountForm(user: UserData): Promise<void> {
+    await this.passwordInput.fill(user.password);
+    await this.dayInput.selectOption(user.day);
+    await this.monthInput.selectOption(user.month);
+    await this.yearInput.selectOption(user.year);
+    await this.newsletterCheckbox.check();
+    await this.offersCheckbox.check();
+    await this.firstNameInput.fill(user.firstName);
+    await this.lastNameInput.fill(user.lastName);
+    await this.companyInput.fill(user.company);
+    await this.address1Input.fill(user.address1);
+    await this.address2Input.fill(user.address2);
+    await this.countrySelect.selectOption(user.country);
+    await this.stateInput.fill(user.state);
+    await this.cityInput.fill(user.city);
+    await this.zipcodeInput.fill(user.zipcode);
+    await this.mobileNumberInput.fill(user.mobileNumber);
+    await this.page.getByRole('button', { name: 'Create Account' }).click();
+  }
 
     async checkRegistration(name: string): Promise<void> {
         await this.verifyAccountCreatedMessageVisible();
@@ -91,5 +90,5 @@ export class RegisterPage extends BasePage{
         await this.verifyLogoutOptionVisible();
         await this.verifyDeleteAccountOptionVisible();
     }
-
+    
 }

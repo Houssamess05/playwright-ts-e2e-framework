@@ -6,7 +6,7 @@ export class BasePage {
   // Locators
   protected logoutLink: Locator;
   protected deleteAccountLink: Locator;
-  protected continueButton: Locator;
+
 
 
 
@@ -14,7 +14,6 @@ export class BasePage {
     this.page = page; // Recibe la pagina una sola vez y la guarda en una variable de clase para poder usarla en todos los metodos de la clase.
     this.logoutLink = this.page.getByRole('link', { name: 'Logout' });
     this.deleteAccountLink = this.page.getByRole('link', { name: 'Delete Account' });
-    this.continueButton = this.page.getByRole('button', { name: 'Continue' });
     }
 
   // Cualquier función que se use en TODA la web va aquí:
