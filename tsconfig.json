@@ -2,21 +2,21 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "CommonJS",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "types": ["node"],
     "strict": true, //Evita variables sin tipo definido
     "noUncheckedIndexedAccess": true, //te obliga a validar que un valor exista antes de usarlo.
     "skipLibCheck": true,
     "esModuleInterop": true,
 
     /* Alias de rutas */
-    "baseUrl": ".",
     "paths": {
-      "@pages/*": ["src/pages/*"],
-      "@fixtures/*": ["src/fixtures/*"],
-      "@api/*": ["src/api/*"],
-      "@data/*": ["src/data/*"],
-      "@config/*": ["src/config/*"],
-      "@utils/*": ["src/utils/*"]
+      "@pages/*": ["./src/pages/*"],
+      "@fixtures/*": ["./src/fixtures/*"],
+      "@api/*": ["./src/api/*"],
+      "@data/*": ["./src/data/*"],
+      "@config/*": ["./src/config/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": ["src/**/*", "tests/**/*", "playwright.config.ts"]
