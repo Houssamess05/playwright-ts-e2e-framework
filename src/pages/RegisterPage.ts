@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class RegisterPage extends BasePage{
@@ -21,7 +21,7 @@ export class RegisterPage extends BasePage{
   private cityInput: Locator;
   private zipcodeInput: Locator;
   private mobileNumberInput: Locator;
-  private continueButton: Locator;
+  private accountCreatedMessage: Locator;
 
 
 
@@ -47,6 +47,11 @@ export class RegisterPage extends BasePage{
         this.zipcodeInput = page.getByTestId('zipcode');
         this.mobileNumberInput = page.getByTestId('mobile_number');
         this.continueButton = page.getByRole('link', { name: 'Continue' });
+        this.accountCreatedMessage = page.getByText('Congratulations! Your new account has been successfully created!');
+    }
+      
+    async verifyAccountCreatedMessageVisible() {
+        await expect(this.accountCreatedMessage).toBeVisible();
     }
 
     async navigate(): Promise<void> {
@@ -80,8 +85,11 @@ export class RegisterPage extends BasePage{
     }
 
     async checkRegistration(name: string): Promise<void> {
+        await this.verifyAccountCreatedMessageVisible();
         await this.continueButton.click();
         await this.verifyLoggedInAs(name);
+        await this.verifyLogoutOptionVisible();
+        await this.verifyDeleteAccountOptionVisible();
     }
 
 }
