@@ -22,15 +22,22 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testDir: './tests/e2e', // Solo busca en tests/e2e
       use: { ...devices['Desktop Chrome'] },
     },
     {
       name: 'firefox',
+      testDir: './tests/e2e',
       use: { ...devices['Desktop Firefox'] },
     },
     {
       name: 'webkit',
+      testDir: './tests/e2e',
       use: { ...devices['Desktop Safari'] },
     },
-  ],
+    {
+      name: 'api',
+      testDir: './tests/api', // Directorio donde se encuentran los tests de API   
+    }
+    ],
 });

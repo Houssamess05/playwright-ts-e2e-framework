@@ -64,24 +64,24 @@ export class RegisterPage extends BasePage{
     }
 
     async completeAccountForm(user: UserData): Promise<void> {
-    await this.passwordInput.fill(user.password);
-    await this.dayInput.selectOption(user.day);
-    await this.monthInput.selectOption(user.month);
-    await this.yearInput.selectOption(user.year);
-    await this.newsletterCheckbox.check();
-    await this.offersCheckbox.check();
-    await this.firstNameInput.fill(user.firstName);
-    await this.lastNameInput.fill(user.lastName);
-    await this.companyInput.fill(user.company);
-    await this.address1Input.fill(user.address1);
-    await this.address2Input.fill(user.address2);
-    await this.countrySelect.selectOption(user.country);
-    await this.stateInput.fill(user.state);
-    await this.cityInput.fill(user.city);
-    await this.zipcodeInput.fill(user.zipcode);
-    await this.mobileNumberInput.fill(user.mobileNumber);
-    await this.page.getByRole('button', { name: 'Create Account' }).click();
-  }
+        await this.passwordInput.fill(user.password);
+        await this.dayInput.selectOption(user.day);
+        await this.monthInput.selectOption(user.month);
+        await this.yearInput.selectOption(user.year);
+        await this.newsletterCheckbox.check();
+        await this.offersCheckbox.check();
+        await this.firstNameInput.fill(user.firstName);
+        await this.lastNameInput.fill(user.lastName);
+        await this.companyInput.fill(user.company);
+        await this.address1Input.fill(user.address1);
+        await this.address2Input.fill(user.address2);
+        await this.countrySelect.selectOption(user.country);
+        await this.stateInput.fill(user.state);
+        await this.cityInput.fill(user.city);
+        await this.zipcodeInput.fill(user.zipcode);
+        await this.mobileNumberInput.fill(user.mobileNumber);
+        await this.page.getByRole('button', { name: 'Create Account' }).click();
+    }
 
     async checkRegistration(name: string): Promise<void> {
         await this.verifyAccountCreatedMessageVisible();
