@@ -3,13 +3,10 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests', // Permite la ejecucion de los tests de APi al igual que los de E2E.
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
+  forbidOnly: !!process.env.CI, // Evita que se ejecute un test con .only en CI
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    ['html', { open: 'never' }],
-    ['list']
-  ],
+  workers: process.env.CI ? 2 : undefined,
+  reporter: process.env.CI ? [['github'], ['html']] : [['html']], // Muestra el reporte en HTML y en GitHub Actions si se ejecuta en CI
 
   use: {
     testIdAttribute: 'data-qa', //Considera el atributo data-qa como id en vez de data-testid.
