@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './tests/e2e',
+  testDir: './tests', // Permite la ejecucion de los tests de APi al igual que los de E2E.
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -22,15 +22,22 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testDir: './tests/e2e', // Solo busca en tests/e2e
       use: { ...devices['Desktop Chrome'] },
     },
     {
       name: 'firefox',
+      testDir: './tests/e2e',
       use: { ...devices['Desktop Firefox'] },
     },
     {
       name: 'webkit',
+      testDir: './tests/e2e',
       use: { ...devices['Desktop Safari'] },
     },
-  ],
+    {
+      name: 'api',
+      testDir: './tests/api', // Directorio donde se encuentran los tests de API   
+    }
+    ],
 });

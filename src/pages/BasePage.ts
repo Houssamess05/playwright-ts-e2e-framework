@@ -32,6 +32,4 @@ export class BasePage {
   async verifyDeleteAccountOptionVisible() {
     await expect(this.deleteAccountLink).toBeVisible();
   }
-
-
 }
