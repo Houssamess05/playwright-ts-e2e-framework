@@ -63,7 +63,7 @@ export class RegisterPage extends BasePage{
         await this.page.getByRole('button', { name: 'Signup' }).click();
     }
 
-    async completeAccountForm(user: UserData): Promise<void> {
+    async fillAccountForm(user: UserData): Promise<void> {
         await this.passwordInput.fill(user.password);
         await this.dayInput.selectOption(user.day);
         await this.monthInput.selectOption(user.month);
@@ -80,6 +80,9 @@ export class RegisterPage extends BasePage{
         await this.cityInput.fill(user.city);
         await this.zipcodeInput.fill(user.zipcode);
         await this.mobileNumberInput.fill(user.mobileNumber);
+    }
+
+    async submitAccountForm(): Promise<void> {
         await this.page.getByRole('button', { name: 'Create Account' }).click();
     }
 
@@ -90,5 +93,12 @@ export class RegisterPage extends BasePage{
         await this.verifyLogoutOptionVisible();
         await this.verifyDeleteAccountOptionVisible();
     }
-    
+
+    async checkIfPasswordIsInvalid(): Promise<boolean> {
+        const esInvalido = await this.passwordInput.evaluate(
+            el => !(el as HTMLInputElement).validity.valid
+        );
+        return esInvalido;
+    }
+
 }
