@@ -1,16 +1,16 @@
 import { test, expect } from '@playwright/test';
-import { UserDetailsResponse, UserPayload, CreateUserResponse} from '../../src/data/user.types';
-import { request } from 'https';
+import { UserDetailsResponse, UserPayload, CreateUserResponse} from '../../src/data/api/user.types';
+import { reqresUser2 } from '@data/api/users'
 
 test('GET /api/users/2 - Obtener la información del usuario 2', async ({ request }) => {
-    const response = await request.get('https://reqres.in/api/users/2');
+    const response = await request.get('/api/users/2');
     expect(response.status()).toBe(200);
     const body: UserDetailsResponse = await response.json();
-    expect(body.data.id).toBe(2);
-    expect(body.data.email).toBe('janet.weaver@reqres.in');
-    expect(body.data.first_name).toBe('Janet');
-    expect(body.data.last_name).toBe('Weaver');
-    expect(body.data.avatar).toBe('https://reqres.in/img/faces/2-image.jpg');
+    expect(body.data.id).toBe(reqresUser2.data.id);
+    expect(body.data.email).toBe(reqresUser2.data.email);
+    expect(body.data.first_name).toBe(reqresUser2.data.first_name);
+    expect(body.data.last_name).toBe(reqresUser2.data.last_name);
+    expect(body.data.avatar).toBe(reqresUser2.data.avatar);
 });
 
 test('POST /api/users - Crear un nuevo usuario', async ({ request }) => {
@@ -18,7 +18,7 @@ test('POST /api/users - Crear un nuevo usuario', async ({ request }) => {
         name: 'John Doe',
         job: 'Software Engineer'
     };
-    const response = await request.post('https://reqres.in/api/users', {
+    const response = await request.post('/api/users', {
         data: payload
     });
     expect(response.status()).toBe(201);
@@ -32,7 +32,7 @@ test('PUT /api/users/2 - Actualizar la información del usuario 2', async ({ req
         name: 'Jane Doe',
         job: 'Product Manager'
     };
-    const response = await request.put('https://reqres.in/api/users/2', {
+    const response = await request.put('/api/users/2', {
         data: payload
     });
     expect(response.status()).toBe(200);
@@ -42,6 +42,6 @@ test('PUT /api/users/2 - Actualizar la información del usuario 2', async ({ req
 });
 
 test('DELETE /api/users/2 - Eliminar el usuario 2', async ({ request }) => {
-    const response = await request.delete('https://reqres.in/api/users/2');
+    const response = await request.delete('/api/users/2');
     expect(response.status()).toBe(204);
 });
