@@ -24,6 +24,7 @@ export class RegisterPage extends BasePage{
   private mobileNumberInput: Locator;
   private accountCreatedMessage: Locator;
   private continueButton: Locator;
+  private signupButton: Locator;
 
     constructor(page: Page) {
         super(page); // Llama al constructor de la clase base
@@ -47,6 +48,7 @@ export class RegisterPage extends BasePage{
         this.mobileNumberInput = page.getByTestId('mobile_number');
         this.continueButton = page.getByRole('link', { name: 'Continue' });
         this.accountCreatedMessage = page.getByText('Congratulations! Your new account has been successfully created!');
+        this.signupButton = page.getByRole('button', { name: 'Signup' });
     }
       
     async verifyAccountCreatedMessageVisible() {
@@ -54,13 +56,13 @@ export class RegisterPage extends BasePage{
     }
 
     async navigate(): Promise<void> {
-        await this.page.goto('https://automationexercise.com/login');
+        await this.page.goto('/login');
     }
 
     async startSignup(name: string, email: string): Promise<void> {
         await this.nameInput.fill(name);
         await this.emailInput.fill(email);
-        await this.page.getByRole('button', { name: 'Signup' }).click();
+        await this.signupButton.click();
     }
 
     async fillAccountForm(user: UserData): Promise<void> {
@@ -86,12 +88,9 @@ export class RegisterPage extends BasePage{
         await this.page.getByRole('button', { name: 'Create Account' }).click();
     }
 
-    async checkRegistration(name: string): Promise<void> {
-        await this.verifyAccountCreatedMessageVisible();
-        await this.continueButton.click();
-        await this.verifyLoggedInAs(name);
-        await this.verifyLogoutOptionVisible();
-        await this.verifyDeleteAccountOptionVisible();
+    async clickContinueButton()
+    {
+        this.continueButton.click();
     }
 
     async checkIfPasswordIsInvalid(): Promise<boolean> {
