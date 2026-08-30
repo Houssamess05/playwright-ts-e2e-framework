@@ -3,7 +3,7 @@ import { BrandsApi } from '../../src/api/brandsApi';
 
 
 test('GET /api/brandsList - Intentar obtener los brands al endpoint /api/brandsList', async ({ request }) => {
-    const brandApi = new BrandsApi();    
+    const brandApi = new BrandsApi(request);    
     const response = await brandApi.getBrands();
     if(response.brands.length > 0) {
         for (const brand of response.brands) {
@@ -15,7 +15,7 @@ test('GET /api/brandsList - Intentar obtener los brands al endpoint /api/brandsL
 });
 
 test('PUT /api/brandsList - Intentar actualizar un brand al endpoint /api/brandsList', async ({ request }) => {
-    const brandApi = new BrandsApi();
+    const brandApi = new BrandsApi(request);
     const response = await brandApi.updateBrand();
     expect(response.responseCode).toBe(405);
 });

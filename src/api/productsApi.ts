@@ -1,25 +1,18 @@
-import { test, expect } from '@playwright/test';
-import { Product, ProductsListResponse } from '../data/api/product.types';
+import { APIRequestContext } from '@playwright/test';
+import { ProductsListResponse } from '../data/api/product.types';
 
 export class ProductsApi {
-  private readonly baseUrl: string = 'https://automationexercise.com';
-
-  constructor() {
-  }
+  
+  constructor(private readonly request: APIRequestContext) {}
 
   async getProducts(): Promise<ProductsListResponse> {
-    const response = await fetch(`${this.baseUrl}/api/productsList`);
-    const body = await response.json();
-    return body;
+    const response = await this.request.get(`api/productsList`);
+    return await response.json();
   }
 
   async createProductToList(): Promise<ProductsListResponse> {
-    const response = await fetch(`${this.baseUrl}/api/productsList`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+   const response = await this.request.post(`api/productsList`, {
+      data: {
         name: 'iPhone 12',
         price: '$1,999.00',
         brand: 'Apple',
@@ -29,23 +22,32 @@ export class ProductsApi {
           },
           category: 'Electronics',
         },
-      }),
+      },
     });
-    const body = await response.json();
-    return body;
+    return await response.json();
   }
 
   async searchProduct(name: string): Promise<ProductsListResponse> {
-    const response = await fetch(`${this.baseUrl}/api/searchProduct`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: name,
-      }),
-    });
-    const body = await response.json();
-    return body;
+      const response = await this.request.post(
+        `api/searchProduct`,
+        {
+          multipart: {
+            search_product: name,
+          }
+        }
+      );
+
+    return await response.json();
+  }
+
+  async searchProductWithoutParam(): Promise<ProductsListResponse> {
+      const response = await this.request.post(
+        `api/searchProduct`,
+        {
+      
+        }
+      );
+
+    return await response.json();
   }
 }

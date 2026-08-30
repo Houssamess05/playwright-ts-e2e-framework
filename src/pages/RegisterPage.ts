@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { UserData } from '@data/user.types';
+import { UserData } from '@data/e2e/user.types';
 
 export class RegisterPage extends BasePage{
 

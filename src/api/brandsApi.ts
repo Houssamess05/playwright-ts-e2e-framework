@@ -1,29 +1,24 @@
-import { test, expect } from '@playwright/test';
-import { brandsListResponse, brand } from '../data/api/brand.type';
+import { APIRequestContext } from '@playwright/test';
+import { brandsListResponse } from '../data/api/brand.type';
 
 export class BrandsApi {
-    private readonly baseUrl: string = 'https://automationexercise.com';
-    constructor() {
-    }
+
+    constructor(private readonly request: APIRequestContext) {}
 
     async getBrands(): Promise<brandsListResponse> {
-        const response = await fetch(`${this.baseUrl}/api/brandsList`);
-        const body = await response.json();
-        return body;
+        const response = await this.request.get('/api/brandsList');
+
+        return await response.json();
     }
-    
+
     async updateBrand(): Promise<brandsListResponse> {
-        const response = await fetch(`${this.baseUrl}/api/brandsList`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
+        const response = await this.request.put('/api/brandsList', {
+            data: {
                 id: 1,
-                brand: 'Apple'
-            }),
+                brand: 'Apple',
+            },
         });
-        const body = await response.json();
-        return body;
+
+        return await response.json();
     }
 }
