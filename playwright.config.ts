@@ -13,6 +13,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
+    baseURL: 'https://automationexercise.com' 
   },
 
   projects: [
@@ -29,18 +30,10 @@ export default defineConfig({
     {
       name: 'webkit',
       testDir: './tests/e2e',
-      use: {
-        ...devices['Desktop Safari'], 
-        baseURL: 'https://automationexercise.com'
-      },
-      
     },
     {
       name: 'api',
       testDir: './tests/api', // Directorio donde se encuentran los tests de API
-      use: {
-        baseURL: 'https://reqres.in',
-      }   
     }
     ],
 });

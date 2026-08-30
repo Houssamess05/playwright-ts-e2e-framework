@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { RegisterPage } from '@pages/RegisterPage';
-import { UserData } from '../../src/data/user.types';
+import { UserData } from '../../src/data/e2e/user.types';
 import { getUniqueAlphaString } from '../../src/utils/generators';
 import { validUser } from '../../src/data/e2e/users';
 

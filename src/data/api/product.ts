@@ -1,0 +1,19 @@
+import { SearchProductResponse } from "./product.types";
+
+export const expectedProducts: SearchProductResponse = {
+  responseCode: 200,
+  products: [
+    {
+      id: 1,
+      name: "Blue Top",
+      price: "Rs. 500",
+      brand: "Polo",
+      category: {
+        usertype: {
+          usertype: "Women"
+        },
+        category: "Tops"
+      }
+    }
+  ]
+};
