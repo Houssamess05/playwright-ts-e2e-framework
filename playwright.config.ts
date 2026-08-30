@@ -10,10 +10,10 @@ export default defineConfig({
 
   use: {
     testIdAttribute: 'data-qa', //Considera el atributo data-qa como id en vez de data-testid.
-    baseURL: 'https://reqres.in', // Servirá para nuestras pruebas iniciales
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
+    baseURL: 'https://automationexercise.com' 
   },
 
   projects: [
@@ -30,11 +30,10 @@ export default defineConfig({
     {
       name: 'webkit',
       testDir: './tests/e2e',
-      use: { ...devices['Desktop Safari'] },
     },
     {
       name: 'api',
-      testDir: './tests/api', // Directorio donde se encuentran los tests de API   
+      testDir: './tests/api', // Directorio donde se encuentran los tests de API
     }
     ],
 });
