@@ -3,7 +3,7 @@ import { validUser } from '../data/api/users';
 import { UserResponse } from '../data/api/users.type';
 import { UserRegistrationData,User, GetUserDetailResponse } from '../data/api/users.type';
 
-export class LoginApi {
+export class UserApi {
     private request: APIRequestContext;
 
     constructor(request: APIRequestContext) {

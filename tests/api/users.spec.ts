@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { LoginApi } from '../../src/api/UserApi';
+import { UserApi } from '../../src/api/UserApi';
 import { getRegistrationUser, expectedValidUserDetail, validUser } from '../../src/data/api/users';
 import { User } from '../../src/data/api/users.type';
 
 /// Test para verificar que el login funciona correctamente
 /// enviando credenciales válidas
 test('POST /api/verifyLogin - Verify login with valid credentials', async ({ request }) => {
-    const loginApi = new LoginApi(request);
+    const loginApi = new UserApi(request);
     const response = await loginApi.login();
     expect(response.responseCode).toBe(200);
     expect(response.message).toBe('User exists!');
@@ -15,14 +15,14 @@ test('POST /api/verifyLogin - Verify login with valid credentials', async ({ req
 /// Test para verificar que el login funciona correctamente
 /// enviando credenciales válidas
 test('POST /api/verifyLogin - Verify login withOUT email', async ({ request }) => {
-    const loginApi = new LoginApi(request);
+    const loginApi = new UserApi(request);
     const response = await loginApi.loginWithoutEmail();
     expect(response.responseCode).toBe(400);
     expect(response.message).toBe('Bad request, email or password parameter is missing in POST request.');
 });
 
 test('DELETE /api/verifyLogin - Verify login endpoint does not support DELETE', async ({ request }) => {
-    const loginApi = new LoginApi(request);
+    const loginApi = new UserApi(request);
     const response = await loginApi.verifyLoginWithDelete();
     expect(response.responseCode).toBe(405);
     expect(response.message).toBe('This request method is not supported.');
@@ -30,7 +30,7 @@ test('DELETE /api/verifyLogin - Verify login endpoint does not support DELETE', 
 
 
 test('POST /api/createAccount - Create user account', async ({ request }) => {
-    const loginApi = new LoginApi(request);
+    const loginApi = new UserApi(request);
     const response = await loginApi.createAccount(getRegistrationUser());
     expect(response.responseCode).toBe(201);
     expect(response.message).toBe('User created!');
@@ -38,7 +38,7 @@ test('POST /api/createAccount - Create user account', async ({ request }) => {
 
 
 test('DELETE /api/deleteAccount - Delete user account', async ({ request }) => {
-    const loginApi = new LoginApi(request);
+    const loginApi = new UserApi(request);
     // Creamos el usuario que vamos a eliminar.
     const user = getRegistrationUser();
     const userResponse = await loginApi.createAccount(user);
@@ -54,7 +54,7 @@ test('DELETE /api/deleteAccount - Delete user account', async ({ request }) => {
 });
 
 test('PUT /api/updateAccount - Update user account', async ({ request }) => {
-    const loginApi = new LoginApi(request);
+    const loginApi = new UserApi(request);
     // Creamos el usuario que vamos a actualizar.
     const user = getRegistrationUser();
     const userResponse = await loginApi.createAccount(user);
@@ -70,7 +70,7 @@ test('PUT /api/updateAccount - Update user account', async ({ request }) => {
 });
 
 test('GET /api/getUserDetailByEmail - Get user account details by email', async ({ request }) => {
-    const loginApi = new LoginApi(request);
+    const loginApi = new UserApi(request);
 
     // Hacemos la llamada usando la propiedad email de validUser
     const response = await loginApi.getUserDetailByEmail(validUser.email);
