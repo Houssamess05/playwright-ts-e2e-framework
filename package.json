@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": { 
-      "test": "playwright test",
-      "test:headed": "playwright test --headed",
-      "test:ui": "playwright test --ui",
-      "test:report": "playwright show-report"
-    },
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.3.0",
+    "newman": "^6.2.2",
     "typescript": "^7.0.2"
   }
 }
