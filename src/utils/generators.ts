@@ -1,6 +1,7 @@
 /**
- * Genera un string aleatorio de letras basado en el timestamp actual
- * para garantizar unicidad en los tests de registro.
+ * Generates a unique alphanumeric string based on the current timestamp.
+ * The string is created by mapping each digit of the timestamp to a corresponding letter from 'a' to 'j'.
+ * @returns A unique alphanumeric string.
  */
 export function getUniqueAlphaString(): string {
   const map = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];

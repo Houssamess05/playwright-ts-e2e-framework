@@ -3,7 +3,6 @@ import { BasePage } from './BasePage';
 import { UserData } from '@data/e2e/user.types';
 
 export class RegisterPage extends BasePage{
-
   private nameInput: Locator;
   private emailInput: Locator;
   private passwordInput: Locator;
@@ -26,8 +25,12 @@ export class RegisterPage extends BasePage{
   private continueButton: Locator;
   private signupButton: Locator;
 
+    /**
+     * Initializes the RegisterPage with the provided Playwright Page object and sets up locators for the registration form elements.
+     * @param page The Playwright page instance used to initialize the registration page.
+     */
     constructor(page: Page) {
-        super(page); // Llama al constructor de la clase base
+        super(page);
         this.nameInput = page.getByRole('textbox', { name: 'Name' });
         this.emailInput = page.getByTestId('signup-email');
         this.passwordInput = page.getByTestId('password');
@@ -50,21 +53,36 @@ export class RegisterPage extends BasePage{
         this.accountCreatedMessage = page.getByText('Congratulations! Your new account has been successfully created!');
         this.signupButton = page.getByRole('button', { name: 'Signup' });
     }
-      
+
+    /**
+     * Verifies that the account created message is visible on the page, indicating successful account creation.
+     */
     async verifyAccountCreatedMessageVisible() {
         await expect(this.accountCreatedMessage).toBeVisible();
     }
 
+    /**
+     * Navigates to the registration page of the application.
+     */
     async navigate(): Promise<void> {
         await this.page.goto('/login');
     }
 
+    /**
+     * Starts the signup process by filling in the name and email fields and clicking the signup button.
+     * @param name The name to enter in the form.
+     * @param email The email to enter in the form.
+     */
     async startSignup(name: string, email: string): Promise<void> {
         await this.nameInput.fill(name);
         await this.emailInput.fill(email);
         await this.signupButton.click();
     }
 
+    /**
+     * Fills in the account registration form with the provided user data, including password, date of birth, personal information, and address details.
+     * @param user The user data used to fill the registration form.
+     */
     async fillAccountForm(user: UserData): Promise<void> {
         await this.passwordInput.fill(user.password);
         await this.dayInput.selectOption(user.day);
@@ -84,15 +102,25 @@ export class RegisterPage extends BasePage{
         await this.mobileNumberInput.fill(user.mobileNumber);
     }
 
+    /**
+     * Submits the account registration form by clicking the "Create Account" button.
+     */
     async submitAccountForm(): Promise<void> {
         await this.page.getByRole('button', { name: 'Create Account' }).click();
     }
 
+    /**
+     * Clicks the "Continue" button after account creation to proceed to the next step.
+     */
     async clickContinueButton()
     {
         this.continueButton.click();
     }
 
+    /**
+     * Checks if the password input field is invalid based on its validity state and returns a boolean indicating whether it is invalid.
+     * @returns True if the password input is invalid; otherwise, false.
+     */
     async checkIfPasswordIsInvalid(): Promise<boolean> {
         const esInvalido = await this.passwordInput.evaluate(
             el => !(el as HTMLInputElement).validity.valid
