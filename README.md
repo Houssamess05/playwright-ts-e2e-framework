@@ -4,83 +4,74 @@
 
 This project is an automated testing framework built with Playwright and TypeScript.
 
-It covers both API testing and end-to-end (E2E) testing, with a focus on maintainability, reusable components, and clean test architecture.
+It covers API and end-to-end testing, using reusable components and a simple test structure.
+
+Postman collections are also included and executed with Newman.
 
 ## 2. Tech Stack
 
-- **Playwright** — End-to-end and API testing
-- **TypeScript** — Programming language
-- **Node.js** — Runtime environment
-- **Git & GitHub** — Version control
-- **GitHub Actions** — CI/CD
+* **Playwright** — E2E and API testing
+* **TypeScript** — Programming language
+* **Node.js** — Runtime environment
+* **Postman / Newman** — API testing
+* **Git & GitHub** — Version control
+* **GitHub Actions** — CI/CD
 
 ## 3. Project Structure
 
 ```text
 ├── src/
-│   ├── api/              # API client classes
+│   ├── api/              # API classes
 │   ├── data/             # Test data and types
 │   │   ├── api/
 │   │   └── e2e/
-│   ├── pages/            # Page Object Model
-│   └── utils/            # Reusable utilities and generators
+│   ├── pages/            # Page Objects
+│   └── utils/            # Reusable utilities
 │
 ├── tests/
-│   ├── api/              # API test suites
-│   └── e2e/              # End-to-end test suites
+│   ├── api/              # API tests
+│   └── e2e/              # E2E tests
 │
-├── postman/              # Postman collections
-├── playwright.config.ts  # Playwright configuration
-├── package.json          # Project dependencies and scripts
-└── tsconfig.json         # TypeScript configuration
+├── postman/              # Postman collections and environments
+├── playwright.config.ts
+├── package.json
+└── tsconfig.json
 ```
 
 ## 4. Test Coverage
 
-The framework currently includes **19 test executions across 4 test files**, covering both API and end-to-end testing.
+### Playwright API
 
-### API Testing
+**13 tests** covering:
 
-**13 test cases** covering:
+* Brands API
+* Products API
+* Users API
 
-- **Brands API**
-  - `GET /api/brandsList` — Retrieve brands
-  - `PUT /api/brandsList` — Update a brand
+### Playwright E2E
 
-- **Products API**
-  - `GET /api/productsList` — Retrieve products
-  - `POST /api/productsList` — Create a product
-  - `POST /api/searchProduct` — Search for a product
-  - `POST /api/searchProduct` — Validate missing `search_product` parameter
+**2 test scenarios** running on:
 
-- **Users API**
-  - `POST /api/verifyLogin` — Verify login with valid credentials
-  - `POST /api/verifyLogin` — Validate missing email parameter
-  - `DELETE /api/verifyLogin` — Validate unsupported HTTP method
-  - `POST /api/createAccount` — Create a user account
-  - `DELETE /api/deleteAccount` — Delete a user account
-  - `PUT /api/updateAccount` — Update a user account
-  - `GET /api/getUserDetailByEmail` — Retrieve user account details
+* Chromium
+* Firefox
+* WebKit
 
-### End-to-End Testing
+Scenarios:
 
-**2 test scenarios** executed across **Chromium, Firefox and WebKit**:
+* Register with valid credentials
+* Register with invalid credentials
 
-- **User Registration**
-  - Register with valid credentials
-  - Register with invalid credentials — Missing password
+### Postman
 
-### Test Summary
+Postman API tests are stored in the `postman/` folder and executed with Newman.
 
-| Test Type | Test Cases | Browsers | Executions |
-|---|---:|---|---:|
-| API | 13 | API | 13 |
-| E2E | 2 | Chromium, Firefox, WebKit | 6 |
-| **Total** | **15** | — | **19** |
+```bash
+npx newman run postman/AutomationTest.postman_collection.json -e postman/AutomationTest.postman_environment.json
+```
 
 ## 5. Running the Tests
 
-Install the project dependencies:
+Install dependencies:
 
 ```bash
 npm ci
@@ -92,76 +83,73 @@ Install Playwright browsers:
 npx playwright install
 ```
 
-Run the complete test suite:
+Run all Playwright tests:
 
 ```bash
 npx playwright test
 ```
 
-Run only API tests:
+Run API tests:
 
 ```bash
 npx playwright test tests/api
 ```
 
-Run only E2E tests:
+Run E2E tests:
 
 ```bash
 npx playwright test tests/e2e
 ```
 
-Run tests in a specific browser:
+Run a specific browser:
 
 ```bash
 npx playwright test --project=chromium
 ```
 
-Run a specific test file:
+Run Postman tests:
 
 ```bash
-npx playwright test tests/e2e/Register.spec.ts
+npx newman run postman/AutomationTest.postman_collection.json -e postman/AutomationTest.postman_environment.json
 ```
 
-## 6. Test Reports
-
-After running the tests, Playwright generates an HTML report.
-
-Open the report with:
+Open the Playwright report:
 
 ```bash
 npx playwright show-report
 ```
 
-The report provides detailed information about test execution, including passed and failed tests, execution time, and test results.
+## 6. CI/CD
 
-## 7. CI/CD
+GitHub Actions runs the automated tests on:
 
-The framework uses **GitHub Actions** to automatically execute the test suite.
+* Push to `main` or `master`
+* Pull requests to `main` or `master`
 
-Tests are triggered on:
+The workflow has two jobs:
 
-- Pushes to the configured branch
-- Pull requests
+### Postman API Tests
 
-The CI pipeline:
+* Install Node.js 20
+* Install Newman
+* Run Postman collection
 
-1. Checks out the repository
-2. Installs Node.js
-3. Installs project dependencies
-4. Installs Playwright browsers
-5. Executes the complete test suite
-6. Uploads the Playwright HTML report as a workflow artifact
+### Playwright E2E Tests
 
-The pipeline currently executes **19 test executions** using **2 workers**.
+* Install latest Node.js LTS
+* Install dependencies
+* Install Playwright browsers
+* Run Playwright tests
+* Upload the HTML report
 
-## 8. Architecture
+## 7. Architecture
 
-The framework separates different responsibilities to keep the test suite maintainable and reusable:
+The project uses a simple separation of responsibilities:
 
-- **Page Objects** encapsulate UI interactions.
-- **API classes** encapsulate API requests.
-- **Test data** is separated from test logic.
-- **Utilities** provide reusable helper functions.
-- **Tests** focus on validating application behaviour.
+* **Page Objects** — UI interactions
+* **API classes** — API requests
+* **Test data** — Test data and types
+* **Utils** — Reusable helpers
+* **Tests** — Test scenarios
+* **Postman** — Additional API testing
 
-This structure allows test logic to remain clean while reducing duplication across the framework.

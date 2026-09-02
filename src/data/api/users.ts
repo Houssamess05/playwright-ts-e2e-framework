@@ -30,6 +30,10 @@ export const expectedValidUserResponse: GetUserDetailResponse = {
     user: expectedValidUserDetail
 };
 
+/**
+ * Generates a registration payload with a unique user name and email.
+ * @returns A user registration object with generated values.
+ */
 export function getRegistrationUser(): UserRegistrationData {
     return {
         name: getUniqueAlphaString(),

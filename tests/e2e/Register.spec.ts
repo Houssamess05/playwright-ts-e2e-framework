@@ -6,10 +6,11 @@ import { validUser } from '../../src/data/e2e/users';
 
 let registerPage: RegisterPage;
 
-// Lo que se realiza antes de cada test.
+// Setup executed before each test.
 test.beforeEach(async ({ page }) => {
   
   const consentButton = page.getByRole('button', { name: 'Consent' });
+  // Handle the consent button if it appears on the page.
   await page.addLocatorHandler(consentButton, async () => {
     await consentButton.click();
   });
@@ -33,8 +34,8 @@ test('Register with valid credentials', async ({ page }) => {
 });
 
 test('Register with invalid credentials - Missing password', async ({ page }) => {
-  // Crear un usuario con contraseña vacía a partir del usuario válido,
-// evitando duplicar todos sus datos.
+  // Create a user with an empty password based on the valid user,
+  // without duplicating all the data.
   const invalidUserPassword: UserData = {
       ...validUser,
       password: ''
@@ -45,9 +46,9 @@ test('Register with invalid credentials - Missing password', async ({ page }) =>
   await expect(page).toHaveURL('https://automationexercise.com/signup');
   await registerPage.fillAccountForm(invalidUserPassword);
   await registerPage.submitAccountForm();
-  // Vamos a comprobar que aun seguimos en la pagina del formulario.
+  // Verify that we remain on the form page.
   await expect(page).toHaveURL('https://automationexercise.com/signup');
-  // Comprobamos utilizando validity que el input de contraseña se comporta como debe:
+  // Check with validity that the password input behaves as expected.
   const isInvalid = await registerPage.checkIfPasswordIsInvalid();
   await expect(isInvalid).toBe(true);
 });
