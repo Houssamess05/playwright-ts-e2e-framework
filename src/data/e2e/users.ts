@@ -16,3 +16,4 @@ export const validUser: UserData = {
     zipcode: '90001',
     mobileNumber: '+1234567890'
 };
+

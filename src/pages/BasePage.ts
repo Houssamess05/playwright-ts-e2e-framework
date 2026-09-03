@@ -6,11 +6,13 @@ export class BasePage {
   // Locators
   protected logoutLink: Locator;
   protected deleteAccountLink: Locator;
+  protected signupLoginLink: Locator;
 
   constructor(page: Page) {
     this.page = page; // Recibe la pagina una sola vez y la guarda en una variable de clase para poder usarla en todos los metodos de la clase.
     this.logoutLink = this.page.getByRole('link', { name: 'Logout' });
     this.deleteAccountLink = this.page.getByRole('link', { name: 'Delete Account' });
+    this.signupLoginLink = this.page.getByRole('link', { name: 'Signup / Login' });
     }
 
   // Verifies that the user is logged in by checking for the presence of a specific text on the page.
@@ -28,5 +30,9 @@ export class BasePage {
   // Verifies that the delete account option is visible on the page.
   async verifyDeleteAccountOptionVisible() {
     await expect(this.deleteAccountLink).toBeVisible();
+  }
+
+  async verifySignupLoginOptionsVisible() {
+    await expect(this.signupLoginLink).toBeVisible();
   }
 }

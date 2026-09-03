@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { validUser } from '../data/api/users';
+import { validUser } from '../data/common/users';
 import { UserResponse } from '../data/api/users.type';
 import { UserRegistrationData,User, GetUserDetailResponse } from '../data/api/users.type';
 
