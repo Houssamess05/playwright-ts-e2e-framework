@@ -15,9 +15,9 @@ jobs:
         with:
           node-version: '20'
       - name: Install Newman
-        run: npm install -g newman
+        run: npm install -g newman@6.2.2
       - name: Run Postman API tests
-        run: npx newman run postman/AutomationTest.postman_collection.json -e postman/AutomationTest.postman_environment.json
+        run: newman run postman/AutomationTest.postman_collection.json -e postman/AutomationTest.postman_environment.json
 
   e2e-tests:
     name: Playwright E2E Tests
