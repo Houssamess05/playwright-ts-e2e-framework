@@ -123,8 +123,8 @@ npx playwright show-report
 
 GitHub Actions runs the automated tests on:
 
-* Push to `main` or `master`
-* Pull requests to `main` or `master`
+* Push to `main`.
+* Pull requests to `main`.
 
 The workflow has two jobs:
 
