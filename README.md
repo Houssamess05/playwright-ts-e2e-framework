@@ -130,7 +130,7 @@ The workflow has two jobs:
 
 ### Postman API Tests
 
-* Install Node.js 20
+* Install Node.js 24
 * Install Newman
 * Run Postman collection
 
