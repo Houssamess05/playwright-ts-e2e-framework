@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { UserApi } from '../../src/api/UserApi';
-import { getRegistrationUser, expectedValidUserDetail, validUser } from '../../src/data/api/users';
+import { getRegistrationUser, expectedValidUserDetail } from '../../src/data/api/users';
+import { validUser as validLoginUser } from '../../src/data/common/users';
 import { User } from '../../src/data/api/users.type';
 
 /// Test to verify that login works correctly
@@ -73,7 +74,7 @@ test('GET /api/getUserDetailByEmail - Get user account details by email', async 
     const loginApi = new UserApi(request);
 
     // Make the request using the email property from validUser
-    const response = await loginApi.getUserDetailByEmail(validUser.email);
+    const response = await loginApi.getUserDetailByEmail(validLoginUser.email);
 
     expect(response.responseCode).toBe(200);
     // Validate the full object returned against the expected object
