@@ -30,6 +30,7 @@ export default defineConfig({
     {
       name: 'webkit',
       testDir: './tests/e2e',
+      use: { ...devices['Desktop Webkit'] },
     },
     {
       name: 'api',

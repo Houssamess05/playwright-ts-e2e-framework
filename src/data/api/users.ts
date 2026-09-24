@@ -1,10 +1,6 @@
-import { User, UserRegistrationData, UserDetail, GetUserDetailResponse } from './users.type';
+import { UserRegistrationData, UserDetail, GetUserDetailResponse } from './users.type';
 import { getUniqueAlphaString } from '../../utils/generators';
 
-export const validUser: User = {
-    email: 'houssam@gmail.com',
-    password: '1234'
-};
 
 export const expectedValidUserDetail: UserDetail = {
     id: 2661347,
