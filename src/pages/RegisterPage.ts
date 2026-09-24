@@ -112,9 +112,8 @@ export class RegisterPage extends BasePage{
     /**
      * Clicks the "Continue" button after account creation to proceed to the next step.
      */
-    async clickContinueButton()
-    {
-        this.continueButton.click();
+    async clickContinueButton(): Promise<void> {
+        await this.continueButton.click();
     }
 
     /**
