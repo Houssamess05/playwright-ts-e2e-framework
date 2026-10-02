@@ -22,10 +22,11 @@ test('Register with valid credentials', async ({ page }) => {
   const randomName = getUniqueAlphaString();
   const randomEmail = `user_${Date.now()}@test.com`;
   await registerPage.startSignup(randomName, randomEmail);
-  await expect(page).toHaveURL('/signup');
+  //Verify if the URL ends with '/signup' to confirm that the user is on the signup page.
+  await expect(page).toHaveURL(/\/signup$/);
   await registerPage.fillAccountForm(validUser);
   await registerPage.submitAccountForm();
-  await expect(page).toHaveURL('/account_created');
+  await expect(page).toHaveURL(/\/account_created$/);
   await registerPage.verifyAccountCreatedMessageVisible()
   await registerPage.clickContinueButton();
   await registerPage.verifyLoggedInAs(randomName);
@@ -43,11 +44,11 @@ test('Register with invalid credentials - Missing password', async ({ page }) =>
   const randomName = getUniqueAlphaString();
   const randomEmail = `user_${Date.now()}@test.com`;
   await registerPage.startSignup(randomName, randomEmail);
-  await expect(page).toHaveURL('https://automationexercise.com/signup');
+  await expect(page).toHaveURL(/\/signup$/);
   await registerPage.fillAccountForm(invalidUserPassword);
   await registerPage.submitAccountForm();
-  // Verify that we remain on the form page.
-  await expect(page).toHaveURL('https://automationexercise.com/signup');
+  // Verify if the URL ends with '/signup' to confirm that the user is still on the signup page due to invalid credentials.
+  await expect(page).toHaveURL(/\/signup$/);
   // Check with validity that the password input behaves as expected.
   const isInvalid = await registerPage.checkIfPasswordIsInvalid();
   await expect(isInvalid).toBe(true);
