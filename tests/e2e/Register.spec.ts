@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { RegisterPage } from '@pages/RegisterPage';
-import { UserData } from '../../src/data/e2e/user.types';
-import { getUniqueAlphaString } from '../../src/utils/generators';
-import { validUser } from '../../src/data/e2e/users';
+import { validUser } from '@data/e2e/users';
+import { faker } from '@faker-js/faker';
+import { generateEmail, generatorUser } from '@utils/generatorUsers';
+import { UserRegistrationData } from '@data/common/users.type';
 
 let registerPage: RegisterPage;
 
@@ -19,16 +20,18 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('Register with valid credentials', async ({ page }) => {
-  const randomName = getUniqueAlphaString();
-  const randomEmail = `user_${Date.now()}@test.com`;
-  await registerPage.startSignup(randomName, randomEmail);
-  await expect(page).toHaveURL('/signup');
-  await registerPage.fillAccountForm(validUser);
+  // Generate a random name and email for the test to avoid conflicts with existing users.
+  // Use faker to create a random string to append to the name, ensuring uniqueness in the email address.
+  const user = generatorUser();
+  await registerPage.startSignup(user.name, user.email);
+  //Verify if the URL ends with '/signup' to confirm that the user is on the signup page.
+  await expect(page).toHaveURL(/\/signup$/);
+  await registerPage.fillAccountForm(user);
   await registerPage.submitAccountForm();
-  await expect(page).toHaveURL('/account_created');
+  await expect(page).toHaveURL(/\/account_created$/);
   await registerPage.verifyAccountCreatedMessageVisible()
   await registerPage.clickContinueButton();
-  await registerPage.verifyLoggedInAs(randomName);
+  await registerPage.verifyLoggedInAs(user.name);
   await registerPage.verifyLogoutOptionVisible();
   await registerPage.verifyDeleteAccountOptionVisible();
 });
@@ -36,18 +39,20 @@ test('Register with valid credentials', async ({ page }) => {
 test('Register with invalid credentials - Missing password', async ({ page }) => {
   // Create a user with an empty password based on the valid user,
   // without duplicating all the data.
-  const invalidUserPassword: UserData = {
+  const name = faker.person.firstName().toString();
+  const invalidUserPassword: UserRegistrationData = {
       ...validUser,
+      name: name,
+      email: generateEmail(name),
+      // Set the password to an empty string to simulate missing password scenario.
       password: ''
   };
-  const randomName = getUniqueAlphaString();
-  const randomEmail = `user_${Date.now()}@test.com`;
-  await registerPage.startSignup(randomName, randomEmail);
-  await expect(page).toHaveURL('https://automationexercise.com/signup');
+  await registerPage.startSignup(invalidUserPassword.name, invalidUserPassword.email);
+  await expect(page).toHaveURL(/\/signup$/);
   await registerPage.fillAccountForm(invalidUserPassword);
   await registerPage.submitAccountForm();
-  // Verify that we remain on the form page.
-  await expect(page).toHaveURL('https://automationexercise.com/signup');
+  // Verify if the URL ends with '/signup' to confirm that the user is still on the signup page due to invalid credentials.
+  await expect(page).toHaveURL(/\/signup$/);
   // Check with validity that the password input behaves as expected.
   const isInvalid = await registerPage.checkIfPasswordIsInvalid();
   await expect(isInvalid).toBe(true);

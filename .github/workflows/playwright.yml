@@ -7,19 +7,18 @@ on:
 
 jobs:
   api-tests:
-    name: Postman API Tests
+    name: API Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: '24'
-          
-      - name: Install Newman
-        run: npm install -g newman@6.2.2
+      - name: Install dependencies
+        run: npm ci
+      - name: Run API tests
+        run: npx playwright test tests/api
 
-      - name: Run Postman API tests
-        run: newman run postman/AutomationTest.postman_collection.json -e postman/AutomationTest.postman_environment.json
 
   e2e-tests:
     name: Playwright E2E Tests
@@ -35,7 +34,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test tests/e2e
       - uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
         with:
