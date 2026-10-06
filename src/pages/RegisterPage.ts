@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { UserData } from '@data/e2e/user.types';
+import { UserRegistrationData } from '@data/common/users.type';
 
 export class RegisterPage extends BasePage{
   private nameInput: Locator;
@@ -83,15 +83,15 @@ export class RegisterPage extends BasePage{
      * Fills in the account registration form with the provided user data, including password, date of birth, personal information, and address details.
      * @param user The user data used to fill the registration form.
      */
-    async fillAccountForm(user: UserData): Promise<void> {
+    async fillAccountForm(user: UserRegistrationData): Promise<void> {
         await this.passwordInput.fill(user.password);
-        await this.dayInput.selectOption(user.day);
-        await this.monthInput.selectOption(user.month);
-        await this.yearInput.selectOption(user.year);
+        await this.dayInput.selectOption(user.birth_date.toString());
+        await this.monthInput.selectOption(user.birth_month.toString());
+        await this.yearInput.selectOption(user.birth_year.toString());
         await this.newsletterCheckbox.check();
         await this.offersCheckbox.check();
-        await this.firstNameInput.fill(user.firstName);
-        await this.lastNameInput.fill(user.lastName);
+        await this.firstNameInput.fill(user.firstname);
+        await this.lastNameInput.fill(user.lastname);
         await this.companyInput.fill(user.company);
         await this.address1Input.fill(user.address1);
         await this.address2Input.fill(user.address2);
@@ -99,7 +99,7 @@ export class RegisterPage extends BasePage{
         await this.stateInput.fill(user.state);
         await this.cityInput.fill(user.city);
         await this.zipcodeInput.fill(user.zipcode);
-        await this.mobileNumberInput.fill(user.mobileNumber);
+        await this.mobileNumberInput.fill(user.mobile_number);
     }
 
     /**

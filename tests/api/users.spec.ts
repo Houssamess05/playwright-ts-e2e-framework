@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { UserApi } from '../../src/api/UserApi';
-import { getRegistrationUser, expectedValidUserDetail } from '../../src/data/api/users';
-import { validUser as validLoginUser } from '../../src/data/common/users';
-import { User } from '../../src/data/api/users.type';
+import { expectedValidUserDetail } from '../../src/data/api/users';
+import { validUser as validLoginUser } from '@data/common/users';
+import { User } from '@data/common/users.type';
+import { generatorUser } from '@utils/generatorUsers';
 
 /// Test to verify that login works correctly
 /// by sending valid credentials
@@ -32,7 +33,7 @@ test('DELETE /api/verifyLogin - Verify login endpoint does not support DELETE', 
 
 test('POST /api/createAccount - Create user account', async ({ request }) => {
     const loginApi = new UserApi(request);
-    const response = await loginApi.createAccount(getRegistrationUser());
+    const response = await loginApi.createAccount(generatorUser());
     expect(response.responseCode).toBe(201);
     expect(response.message).toBe('User created!');
 });
@@ -41,7 +42,7 @@ test('POST /api/createAccount - Create user account', async ({ request }) => {
 test('DELETE /api/deleteAccount - Delete user account', async ({ request }) => {
     const loginApi = new UserApi(request);
     // Create the user we are going to delete.
-    const user = getRegistrationUser();
+    const user = generatorUser();
     const userResponse = await loginApi.createAccount(user);
     expect(userResponse.responseCode).toBe(201);
     const userToDelete : User = {
@@ -57,7 +58,7 @@ test('DELETE /api/deleteAccount - Delete user account', async ({ request }) => {
 test('PUT /api/updateAccount - Update user account', async ({ request }) => {
     const loginApi = new UserApi(request);
     // Create the user we are going to update.
-    const user = getRegistrationUser();
+    const user = generatorUser();
     const userResponse = await loginApi.createAccount(user);
     expect(userResponse.responseCode).toBe(201);
     const userToUpdate : User = {
