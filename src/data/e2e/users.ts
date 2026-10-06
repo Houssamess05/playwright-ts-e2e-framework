@@ -1,12 +1,16 @@
-import { UserData } from './user.types';
+import { UserRegistrationData } from '@data/common/users.type';
 
-export const validUser: UserData = {
+
+export const validUser: UserRegistrationData = {
+    name: 'John Doe',
+    email: 'john.dooe4@example.com', 
+    title: 'Mr',
     password: 'password123',
-    day: '15',
-    month: '6',
-    year: '1990',
-    firstName: 'John',
-    lastName: 'Doe',
+    birth_date: 15,
+    birth_month: 6,
+    birth_year: 1990,
+    firstname: 'John',
+    lastname: 'Doe',
     company: 'Example Inc.',
     address1: '123 Main St',
     address2: 'Apt 4B',
@@ -14,6 +18,6 @@ export const validUser: UserData = {
     state: 'California',
     city: 'Los Angeles',
     zipcode: '90001',
-    mobileNumber: '+1234567890'
+    mobile_number: '+1234567890'
 };
 

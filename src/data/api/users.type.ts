@@ -5,28 +5,6 @@ export interface UserResponse {
     message: string;
 }
 
-export type Title = 'Mr' | 'Mrs' | 'Miss';
-
-export interface UserRegistrationData {
-  name: string;
-  email: string;
-  password: string;
-  title: Title;
-  birth_date: number;
-  birth_month: number;
-  birth_year: number;
-  firstname: string;
-  lastname: string;
-  company: string;
-  address1: string;
-  address2: string;
-  country: string;
-  zipcode: number;
-  state: string;
-  city: string;
-  mobile_number: number;
-}
-
 export interface UserDetail {
   id: number;
   name: string;

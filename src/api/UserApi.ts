@@ -1,7 +1,8 @@
 import { APIRequestContext } from '@playwright/test';
 import { validUser } from '../data/common/users';
 import { UserResponse } from '../data/api/users.type';
-import { UserRegistrationData,User, GetUserDetailResponse } from '../data/api/users.type';
+import { GetUserDetailResponse } from '../data/api/users.type';
+import { UserRegistrationData, User } from '../data/common/users.type';
 
 export class UserApi {
     private request: APIRequestContext;
