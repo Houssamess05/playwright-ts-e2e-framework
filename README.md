@@ -2,37 +2,34 @@
 
 ## 1. Overview
 
-This project is an automated testing framework built with Playwright and TypeScript.
-
-It covers API and end-to-end testing, using reusable components and a simple test structure.
-
-Postman collections are also included and executed with Newman.
+This project is an automated testing framework built with Playwright and TypeScript. It covers API and end-to-end (E2E) testing for Automation Exercise, with reusable API clients, Page Objects, test data, and utilities.
 
 ## 2. Tech Stack
 
-* **Playwright** — E2E and API testing
+* **Playwright Test** — E2E and API testing
 * **TypeScript** — Programming language
-* **Node.js** — Runtime environment
-* **Postman / Newman** — API testing
-* **Git & GitHub** — Version control
+* **Node.js 24** — Runtime used in CI
+* **Faker.js** — Dynamic test data generation
 * **GitHub Actions** — CI/CD
 
 ## 3. Project Structure
 
 ```text
 ├── src/
-│   ├── api/              # API classes
-│   ├── data/             # Test data and types
-│   │   ├── api/
-│   │   └── e2e/
-│   ├── pages/            # Page Objects
-│   └── utils/            # Reusable utilities
+│   ├── api/                  # API client classes
+│   ├── data/
+│   │   ├── api/              # API test data and types
+│   │   ├── common/           # Shared data and types
+│   │   └── e2e/              # E2E test data and types
+│   ├── fixtures/             # Reusable Playwright fixtures
+│   ├── pages/                # Page Objects
+│   └── utils/                # Reusable utilities and data generators
 │
 ├── tests/
-│   ├── api/              # API tests
-│   └── e2e/              # E2E tests
+│   ├── api/                  # API tests
+│   └── e2e/                  # Browser-based E2E tests
 │
-├── postman/              # Postman collections and environments
+├── .github/workflows/        # GitHub Actions workflows
 ├── playwright.config.ts
 ├── package.json
 └── tsconfig.json
@@ -44,34 +41,20 @@ Postman collections are also included and executed with Newman.
 
 **13 tests** covering:
 
-* Brands API
-* Products API
-* Users API
+* **Brands** — Retrieve brands and verify unsupported update requests.
+* **Products** — Retrieve and validate products, search for products, and verify unsupported or invalid requests.
+* **Users** — Verify login, create/update/delete accounts, and retrieve account details.
 
 ### Playwright E2E
 
-**2 test scenarios** running on:
+**2 scenarios** running on Chromium, Firefox, and WebKit:
 
-* Chromium
-* Firefox
-* WebKit
-
-Scenarios:
-
-* Register with valid credentials
-* Register with invalid credentials
-
-### Postman
-
-Postman API tests are stored in the `postman/` folder and executed with Newman.
-
-```bash
-npx newman run postman/AutomationTest.postman_collection.json -e postman/AutomationTest.postman_environment.json
-```
+* Register an account with valid credentials.
+* Attempt registration without a password and verify the browser's required-field validation.
 
 ## 5. Running the Tests
 
-Install dependencies:
+Install dependencies (Node.js 24 is used by the CI workflow):
 
 ```bash
 npm ci
@@ -83,10 +66,10 @@ Install Playwright browsers:
 npx playwright install
 ```
 
-Run all Playwright tests:
+Run all tests (API and E2E):
 
 ```bash
-npx playwright test
+npm test
 ```
 
 Run API tests:
@@ -101,55 +84,48 @@ Run E2E tests:
 npx playwright test tests/e2e
 ```
 
-Run a specific browser:
+Run E2E tests in a specific browser:
 
 ```bash
 npx playwright test --project=chromium
 ```
 
-Run Postman tests:
+Run tests with the browser UI or in headed mode:
 
 ```bash
-npx newman run postman/AutomationTest.postman_collection.json -e postman/AutomationTest.postman_environment.json
+npm run test:ui
+npm run test:headed
 ```
 
-Open the Playwright report:
+Open the HTML report:
 
 ```bash
-npx playwright show-report
+npm run test:report
 ```
 
 ## 6. CI/CD
 
-GitHub Actions runs the automated tests on:
+GitHub Actions runs on pushes and pull requests targeting `main`. The workflow has two jobs:
 
-* Push to `main`.
-* Pull requests to `main`.
+### API Tests
 
-The workflow has two jobs:
-
-### Postman API Tests
-
-* Install Node.js 24
-* Install Newman
-* Run Postman collection
+* Set up Node.js 24 and install dependencies with `npm ci`.
+* Run `npx playwright test tests/api`.
 
 ### Playwright E2E Tests
 
-* Install latest Node.js LTS
-* Install dependencies
-* Install Playwright browsers
-* Run Playwright tests
-* Upload the HTML report
+* Set up Node.js 24, install dependencies, and install Playwright browsers with system dependencies.
+* Run `npx playwright test tests/e2e`.
+* Upload the HTML report as a workflow artifact, retained for 30 days.
 
 ## 7. Architecture
 
 The project uses a simple separation of responsibilities:
 
-* **Page Objects** — UI interactions
-* **API classes** — API requests
-* **Test data** — Test data and types
-* **Utils** — Reusable helpers
-* **Tests** — Test scenarios
-* **Postman** — Additional API testing
+* **Page Objects** — Encapsulate browser interactions and page behavior.
+* **API clients** — Encapsulate requests to the brands, products, and users endpoints.
+* **Fixtures** — Provide reusable test setup, including authenticated-page setup.
+* **Test data and types** — Keep API, E2E, and shared data organized and typed.
+* **Utilities** — Generate unique, realistic user data for tests.
+* **Tests** — Define API checks and browser-based user scenarios.
 
