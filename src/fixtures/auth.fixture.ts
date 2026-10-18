@@ -1,9 +1,9 @@
-import { test as base } from '@playwright/test';
+import { test as base, Page } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { validUser } from '../data/common/users';
 
 type Fixtures = {
-    loggedInPage: LoginPage;
+    loggedInPage: Page;
 };
 
 export const test = base.extend<Fixtures>({
@@ -20,7 +20,7 @@ export const test = base.extend<Fixtures>({
         await loginPage.verifyLogoutOptionVisible();
 
         // Use the logged-in page for the test
-        await use(loginPage);
+        await use(page);
 
         // After the test, log out to clean up
         await loginPage.clickLogout();
