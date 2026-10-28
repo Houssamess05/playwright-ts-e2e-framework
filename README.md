@@ -134,7 +134,7 @@ The project uses a simple separation of responsibilities:
 
 * **Page Objects** — Encapsulate browser interactions and page behavior.
 * **API clients** — Encapsulate requests to the brands, products, and users endpoints.
-* **Fixtures** — Provide reusable test setup, including authenticated-page setup.
+* **Fixtures** — Reusable test setup, including an authenticated page: a user is created through the API, logged in, and deleted after the test.
 * **Test data and types** — Keep API, E2E, and shared data organized and typed.
 * **Utilities** — Generate unique, realistic user data for tests.
 * **Tests** — Define API checks and browser-based user scenarios.
