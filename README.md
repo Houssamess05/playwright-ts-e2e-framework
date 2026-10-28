@@ -4,15 +4,28 @@
 
 This project is an automated testing framework built with Playwright and TypeScript. It covers API and end-to-end (E2E) testing for Automation Exercise, with reusable API clients, Page Objects, test data, and utilities.
 
-## 2. Tech Stack
+## 2. Roadmap
+
+**In progress** (in separate branches, not merged into `main` yet):
+
+- **Purchase flow E2E test:** browse products, add to cart and complete the checkout, with real assertions on the cart and the order confirmation.
+- **Shared base fixture:** handle the cookie-consent banner once for every UI test, instead of repeating it in each spec.
+
+**Next steps:**
+
+- Replace the fixed test account data with users created and deleted through the API in each test.
+- Delete the accounts created by the registration tests.
+- Add more E2E scenarios (login, cart, product search).
+
+## 3. Tech Stack
 
 * **Playwright Test** — E2E and API testing
 * **TypeScript** — Programming language
 * **Node.js 24** — Runtime used in CI
 * **Faker.js** — Dynamic test data generation
 * **GitHub Actions** — CI/CD
-
-## 3. Project Structure
+  
+## 4. Project Structure
 
 ```text
 ├── src/
@@ -35,7 +48,7 @@ This project is an automated testing framework built with Playwright and TypeScr
 └── tsconfig.json
 ```
 
-## 4. Test Coverage
+## 5. Test Coverage
 
 ### Playwright API
 
@@ -52,7 +65,7 @@ This project is an automated testing framework built with Playwright and TypeScr
 * Register an account with valid credentials.
 * Attempt registration without a password and verify the browser's required-field validation.
 
-## 5. Running the Tests
+## 6. Running the Tests
 
 Install dependencies (Node.js 24 is used by the CI workflow):
 
@@ -103,7 +116,7 @@ Open the HTML report:
 npm run test:report
 ```
 
-## 6. CI/CD
+## 7. CI/CD
 
 GitHub Actions runs on pushes and pull requests targeting `main`. The workflow has two jobs:
 
@@ -118,7 +131,7 @@ GitHub Actions runs on pushes and pull requests targeting `main`. The workflow h
 * Run `npx playwright test tests/e2e`.
 * Upload the HTML report as a workflow artifact, retained for 30 days.
 
-## 7. Architecture
+## 8. Architecture
 
 The project uses a simple separation of responsibilities:
 
