@@ -6,17 +6,14 @@ This project is an automated testing framework built with Playwright and TypeScr
 
 ## 2. Roadmap
 
-**In progress** (in separate branches, not merged into `main` yet):
+### Currently working on
 
-- **Purchase flow E2E test:** browse products, add to cart and complete the checkout, with real assertions on the cart and the order confirmation.
+- **Purchase flow E2E test:** browse products, add to cart and complete the checkout, with assertions on the cart and the order confirmation.
 - **Shared base fixture:** handle the cookie-consent banner once for every UI test, instead of repeating it in each spec.
-
-**Next steps:**
-
-- Replace the fixed test account data with users created and deleted through the API in each test.
-- Delete the accounts created by the registration tests.
-- Add more E2E scenarios (login, cart, product search).
-
+- **More E2E scenarios:** login, cart and product search.
+- **Stronger API assertions:** verify the resulting state after create and update operations, and check that collection endpoints return real data.
+- **Test data isolation:** replace the fixed test account data with users created and deleted through the API in each test.
+  
 ## 3. Tech Stack
 
 * **Playwright Test** — E2E and API testing
