@@ -24,6 +24,7 @@ async fillAccountForm(user: User) {
 }
 
 async submitAccountForm() {
+    
     // Click the login button to submit the account form.
     await this.loginButton.click();
 }
