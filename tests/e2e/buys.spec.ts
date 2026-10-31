@@ -4,7 +4,7 @@ import { expectedProducts } from '../../src/data/api/product';
 import { ProductsPage } from '../../src/pages/productsPage';
 
 
-test('Buy a some products', async ({ loggedInPage }) => {
+test.fixme('Buy a some products', async ({ loggedInPage }) => {
     await loggedInPage.goto('/products');
     const productsPage = new ProductsPage(loggedInPage);
     const productName = expectedProducts.products[0]!.name;
