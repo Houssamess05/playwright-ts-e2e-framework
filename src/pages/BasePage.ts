@@ -7,12 +7,14 @@ export class BasePage {
   protected logoutLink: Locator;
   protected deleteAccountLink: Locator;
   protected signupLoginLink: Locator;
+  protected cartButton: Locator;
 
   constructor(page: Page) {
     this.page = page; // Recibe la pagina una sola vez y la guarda en una variable de clase para poder usarla en todos los metodos de la clase.
     this.logoutLink = this.page.getByRole('link', { name: 'Logout' });
     this.deleteAccountLink = this.page.getByRole('link', { name: 'Delete Account' });
     this.signupLoginLink = this.page.getByRole('link', { name: 'Signup / Login' });
+    this.cartButton = this.page.getByRole('link', { name: 'Cart' });
     }
 
   // Verifies that the user is logged in by checking for the presence of a specific text on the page.
@@ -34,5 +36,9 @@ export class BasePage {
 
   async verifySignupLoginOptionsVisible() {
     await expect(this.signupLoginLink).toBeVisible();
+  }
+
+  async clickCartButton() {
+    await this.cartButton.click();
   }
 }
