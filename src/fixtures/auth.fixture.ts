@@ -23,8 +23,8 @@ export const test = base.extend<Fixtures>({
         };
         // Create a new user account using the API before logging in
         const result = await loginApi.createAccount(userInfo);
-        try {
-            if (result.responseCode == 201) {
+        if (result.responseCode == 201) {
+            try {
                 await loginPage.fillAccountForm(validUser);
                 await loginPage.submitAccountForm();
                 // Confirm that the user is logged in by checking for the presence of the logout option
@@ -36,8 +36,12 @@ export const test = base.extend<Fixtures>({
                 await loginPage.clickLogout();
                 await loginPage.verifySignupLoginOptionsVisible();
             }
-        } finally { //Allways delete the user account even if the test fails or crashes
-            await loginApi.deleteAccount(validUser); // delete the user account after the test crashed
+            finally { //Allways delete the user account even if the test fails or crashes
+                await loginApi.deleteAccount(validUser); // delete the user account after the test crashed
+            }
+        }
+        else {
+            throw new Error(`Failed to create user account. Response code: ${result.responseCode}, message: ${result.message}`);
         }
     },
 });
