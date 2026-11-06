@@ -10,7 +10,7 @@ export class BasePage {
   protected cartButton: Locator;
 
   constructor(page: Page) {
-    this.page = page; // Recibe la pagina una sola vez y la guarda en una variable de clase para poder usarla en todos los metodos de la clase.
+    this.page = page; // Receives the page instance once and stores it as a class property so all methods can reuse it.
     this.logoutLink = this.page.getByRole('link', { name: 'Logout' });
     this.deleteAccountLink = this.page.getByRole('link', { name: 'Delete Account' });
     this.signupLoginLink = this.page.getByRole('link', { name: 'Signup / Login' });
